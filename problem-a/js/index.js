@@ -93,9 +93,10 @@ const URL_TEMPLATE = "https://itunes.apple.com/search?entity=song&limit=25&term=
 
 function fetchTrackList(termString) {
   togglerSpinner();
-  fetch(URL_TEMPLATE.replace('{searchTerm}', termString))
+  let promise = fetch(URL_TEMPLATE.replace('{searchTerm}', termString))
     .then(function(response){
-      return response.json();
+      let dataPromise = response.json();  
+      return dataPromise;
     })
     .then(function(data) {
       renderSearchResults(data);
@@ -105,7 +106,8 @@ function fetchTrackList(termString) {
     })
     .then(function(){
       togglerSpinner();
-    })
+    });
+    return promise;
 }
 //fetchTrackList('Imagine Dragons');
 
